@@ -105,6 +105,7 @@ export default function CustomDialog(props) {
     isTalentMyJobsDialog,
     isProfile,
     isInfo,
+    padding
   } = props;
   return (
     <StyledDialog
@@ -129,7 +130,9 @@ export default function CustomDialog(props) {
       <StyledDialogTitle id="customized-dialog-title" onClose={onDialogClose}>
         {/* {title} */}
       </StyledDialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent sx={{
+        padding: `${padding} !important`
+      }}>{children}</DialogContent>
       {hideButton && (
         <StyledDialogAction>
           {showFooter && footer ? (

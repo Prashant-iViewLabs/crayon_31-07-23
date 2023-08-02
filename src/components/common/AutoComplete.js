@@ -22,6 +22,7 @@ export default function AutoComplete({
   defaultValue,
   onChange,
   data,
+  height,
   disabled = false,
   multiple = false,
   limitTags = 5,
@@ -36,7 +37,7 @@ export default function AutoComplete({
       sx={{
         display: "flex",
         borderRadius: "25px",
-        height: "40px",
+        height: height ? height : "40px",
         boxShadow: "none",
         border: `1px solid ${theme.palette.grayBorder}`,
         ...sx,
@@ -53,6 +54,7 @@ export default function AutoComplete({
           },
         }}
         disabled={disabled}
+        disableCloseOnSelect={false}
         allowCustomInput={allowCustomInput}
         size="small"
         id={id}

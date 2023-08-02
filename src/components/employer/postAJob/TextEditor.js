@@ -8,6 +8,13 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
+
+const customStyle = `
+    .public-DraftStyleDefault-block {
+      margin: 0;
+    }
+  `;
+
 const StyledPaper = styled(Paper)(({ theme }) => ({
   borderRadius: "25px",
   boxShadow:
@@ -163,6 +170,8 @@ export default function TextEditor({ value, type, title, onInputCHange }) {
       >
         {title}
       </Typography>
+      <style>{customStyle}</style>
+      
       <Editor
         // editorState={editorState}
         editorState={editorState}

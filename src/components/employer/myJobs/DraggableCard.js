@@ -45,6 +45,29 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getQandA } from "../../../redux/employer/myJobsSlice";
 
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+
+// const copyToClipboard = (text) => {
+//   const textArea = document.createElement("textarea");
+//   textArea.value = text;
+//   textArea.style.position = "fixed"; // Ensures the textarea is not visible
+//   document.body.appendChild(textArea);
+//   textArea.select();
+
+//   try {
+//     const successful = document.execCommand("copy");
+//     const msg = successful
+//       ? "Text copied to clipboard successfully!"
+//       : "Failed to copy text to clipboard.";
+//     console.log(msg);
+//   } catch (error) {
+//     console.error("Error copying text to clipboard:", error);
+//   }
+
+//   document.body.removeChild(textArea);
+// };
+
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 5,
   borderRadius: 5,
@@ -181,6 +204,7 @@ export default function DraggableCard({
   const [openQandADialog, setOpenQandADialog] = useState(false);
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const [expand, setExpand] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const onHandleClose = () => {
     setOpenInfoDialog(false);
@@ -242,10 +266,6 @@ export default function DraggableCard({
       },
     };
     onDragEnd(result);
-  };
-
-  const handleCopytext = (text) => {
-    navigator.clipboard.writeText(text);
   };
 
   const toggleAcordion = () => {
@@ -379,7 +399,7 @@ export default function DraggableCard({
                         {item?.candidate_profile?.candidate_info?.job_title
                           ?.title
                           ? item?.candidate_profile?.candidate_info?.job_title
-                              ?.title
+                            ?.title
                           : "-"}
                       </Typography>
                       <StyledHR></StyledHR>
@@ -489,11 +509,11 @@ export default function DraggableCard({
                       ? "yellowButton100"
                       : item?.job_users[0]?.candidate_job_status?.name ===
                         "not for me"
-                      ? "redButton"
-                      : item?.job_users[0]?.candidate_job_status?.name ===
-                        "i like this"
-                      ? "orangeButton"
-                      : "greenButton200"
+                        ? "redButton"
+                        : item?.job_users[0]?.candidate_job_status?.name ===
+                          "i like this"
+                          ? "orangeButton"
+                          : "greenButton200"
                   }
                   className="dotIcon"
                 >
@@ -710,31 +730,31 @@ export default function DraggableCard({
               >
                 {item?.candidate_profile?.candidate_info?.primary?.name !=
                   null && (
-                  <SmallButton
-                    color="purpleButton"
-                    height={25}
-                    letterSpacing="0"
-                    p="8px"
-                    label={
-                      item?.candidate_profile?.candidate_info?.primary?.name
-                    }
-                    mr="8px"
-                  />
-                )}
+                    <SmallButton
+                      color="purpleButton"
+                      height={25}
+                      letterSpacing="0"
+                      p="8px"
+                      label={
+                        item?.candidate_profile?.candidate_info?.primary?.name
+                      }
+                      mr="8px"
+                    />
+                  )}
 
                 {item?.candidate_profile?.candidate_info?.shadow?.name !=
                   null && (
-                  <SmallButton
-                    color="brownButton"
-                    height={25}
-                    letterSpacing="0"
-                    p="8px"
-                    label={
-                      item?.candidate_profile?.candidate_info?.shadow?.name
-                    }
-                    mr="8px"
-                  />
-                )}
+                    <SmallButton
+                      color="brownButton"
+                      height={25}
+                      letterSpacing="0"
+                      p="8px"
+                      label={
+                        item?.candidate_profile?.candidate_info?.shadow?.name
+                      }
+                      mr="8px"
+                    />
+                  )}
               </Box>
               <Box
                 sx={{
@@ -957,22 +977,27 @@ export default function DraggableCard({
                     >
                       {item?.email}
                     </Typography>
-                    <IconButton
-                      aria-label="edit"
-                      color="grayButton"
-                      sx={{
-                        mr: "4px",
-                        padding: "0 !important",
-                        color: "blue",
-                        minWidth: "25px !important",
-                        "& .MuiSvgIcon-root": {
-                          width: "25px",
-                        },
-                      }}
-                      onClick={() => handleCopytext(item?.email)}
-                    >
-                      <ContentCopyRoundedIcon />
-                    </IconButton>
+
+                    <CopyToClipboard text={item?.email} onCopy={() => {
+                      alert("copied");
+                    }}>
+                      <IconButton
+                        aria-label="edit"
+                        color="grayButton"
+                        sx={{
+                          mr: "4px",
+                          padding: "0 !important",
+                          color: "blue",
+                          minWidth: "25px !important",
+                          "& .MuiSvgIcon-root": {
+                            width: "25px",
+                          },
+                        }}
+                      // onClick={() => handleCopyToClipboard(item?.email)}
+                      >
+                        <ContentCopyRoundedIcon />
+                      </IconButton>
+                    </CopyToClipboard>
                   </Box>
                   <Box
                     sx={{
@@ -1008,25 +1033,28 @@ export default function DraggableCard({
                     >
                       {item?.candidate_profile?.contact_no}
                     </Typography>
-                    <IconButton
-                      aria-label="edit"
-                      color="grayButton"
-                      sx={{
-                        mr: "4px",
-                        padding: "0 !important",
-                        minWidth: "25px !important",
-                        color: "blue",
-                        marginLeft: "auto",
-                        "& .MuiSvgIcon-root": {
-                          width: "25px",
-                        },
-                      }}
-                      onClick={() =>
-                        handleCopytext(item?.candidate_profile?.contact_no)
-                      }
-                    >
-                      <ContentCopyRoundedIcon />
-                    </IconButton>
+                    <CopyToClipboard text={item?.candidate_profile?.contact_no} onCopy={() => {
+                      alert("copied");
+                    }}>
+
+                      <IconButton
+                        aria-label="edit"
+                        color="grayButton"
+                        sx={{
+                          mr: "4px",
+                          padding: "0 !important",
+                          minWidth: "25px !important",
+                          color: "blue",
+                          marginLeft: "auto",
+                          "& .MuiSvgIcon-root": {
+                            width: "25px",
+                          },
+                        }}
+                      >
+                        <ContentCopyRoundedIcon />
+                      </IconButton>
+                    </CopyToClipboard>
+
                   </Box>
                   <StyledVR></StyledVR>
 

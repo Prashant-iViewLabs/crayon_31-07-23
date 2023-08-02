@@ -45,6 +45,10 @@ import { getLocalStorage, setLocalStorage } from "../../../utils/Common";
 import { getJobDetail } from "../../../redux/guest/jobsSlice";
 import DOMPurify from "dompurify";
 
+import {
+  getAllQuestionsWithoutLogin,
+} from "../../../redux/guest/getQuestions";
+
 const label1 = "applied";
 const label2 = "shortlisted";
 const label3 = "interviewed";
@@ -66,6 +70,7 @@ export default function JobsDetailPage() {
     Boolean(getLocalStorage("isLoggedIn"))
   );
 
+  const [openApplyJobDialog, setopenApplyJobDialog] = useState(false);
   const { id } = useParams();
 
   const getquestions = async () => {
@@ -82,10 +87,28 @@ export default function JobsDetailPage() {
       );
     }
   };
-
+  const getquestionswithoutlogin = async () => {
+    const { payload } = await dispatch(
+      getAllQuestionsWithoutLogin(job?.job_id)
+    );
+    if (payload?.status === "success") {
+      setQuestions(payload.data);
+    } else {
+      dispatch(
+        setAlert({
+          show: true,
+          type: ALERT_TYPE.ERROR,
+          msg: payload?.message,
+        })
+      );
+    }
+  };
   const handleClick = () => {
-    setOpenLoginDialog(true);
-    getquestions();
+        setopenApplyJobDialog(true);
+        getquestionswithoutlogin()
+  };
+  const onApplyHandleClose = () => {
+    setopenApplyJobDialog(false);
   };
 
   const onHandleClose = () => {
@@ -426,20 +449,27 @@ export default function JobsDetailPage() {
           >
             Work Type
           </Typography>
-          <SmallButton
-            color={"blueButton700"}
-            height={25}
-            value={job?.type}
-            label={job?.type?.split(" ")[0]}
-            mr="4px"
-          />
-          <SmallButton
-            color={"blueButton700"}
-            height={25}
-            value={job?.work_setup}
-            label={job?.work_setup}
-            mr="4px"
-          />
+          <Box sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1
+          }}>
+
+            <SmallButton
+              color={"blueButton700"}
+              height={25}
+              value={job?.type}
+              label={job?.type?.split(" ")[0]}
+
+            />
+            <SmallButton
+              color={"blueButton700"}
+              height={25}
+              value={job?.work_setup}
+              label={job?.work_setup}
+
+            />
+          </Box>
         </Grid>
 
         <Grid
@@ -457,17 +487,24 @@ export default function JobsDetailPage() {
           >
             Industry
           </Typography>
-          {job?.employer_industries?.map((item) => {
-            return (
-              <SmallButton
-                color={"blueButton600"}
-                height={25}
-                value={item?.industry?.name}
-                label={item?.industry?.name?.split(" ")[0]}
-                mr="4px"
-              />
-            );
-          })}
+          <Box sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1
+          }}>
+
+            {job?.employer_industries?.map((item) => {
+              return (
+                <SmallButton
+                  color={"blueButton600"}
+                  height={25}
+                  value={item?.industry?.name}
+                  label={item?.industry?.name?.split(" ")[0]}
+
+                />
+              );
+            })}
+          </Box>
         </Grid>
 
         <Grid
@@ -485,17 +522,24 @@ export default function JobsDetailPage() {
           >
             Skills
           </Typography>
-          {job?.job_tags?.map((item) => {
-            return (
-              <SmallButton
-                color={"orangeButton"}
-                height={25}
-                value={item?.tag?.tag}
-                label={item?.tag?.tag}
-                mr="4px"
-              />
-            );
-          })}
+          <Box sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1
+          }}>
+
+            {job?.job_tags?.map((item) => {
+              return (
+                <SmallButton
+                  color={"orangeButton"}
+                  height={25}
+                  value={item?.tag?.tag}
+                  label={item?.tag?.tag}
+
+                />
+              );
+            })}
+          </Box>
         </Grid>
 
         <Grid
@@ -513,17 +557,24 @@ export default function JobsDetailPage() {
           >
             Tools
           </Typography>
-          {job?.job_tools?.map((item) => {
-            return (
-              <SmallButton
-                color={"yellowButton300"}
-                height={25}
-                value={item?.tool?.name}
-                label={item?.tool?.name}
-                mr="4px"
-              />
-            );
-          })}
+          <Box sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1
+          }}>
+
+            {job?.job_tools?.map((item) => {
+              return (
+                <SmallButton
+                  color={"yellowButton300"}
+                  height={25}
+                  value={item?.tool?.name}
+                  label={item?.tool?.name}
+
+                />
+              );
+            })}
+          </Box>
         </Grid>
 
         <Grid
@@ -541,17 +592,24 @@ export default function JobsDetailPage() {
           >
             Personality
           </Typography>
-          {job?.job_traits?.map((item) => {
-            return (
-              <SmallButton
-                color={"grayButton200"}
-                height={25}
-                value={item?.trait?.name}
-                label={item?.trait?.name}
-                mr="4px"
-              />
-            );
-          })}
+          <Box sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1
+          }}>
+
+            {job?.job_traits?.map((item) => {
+              return (
+                <SmallButton
+                  color={"grayButton200"}
+                  height={25}
+                  value={item?.trait?.name}
+                  label={item?.trait?.name}
+
+                />
+              );
+            })}
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -1147,6 +1205,21 @@ export default function JobsDetailPage() {
         </Grid>
       </Grid>
       {/* right body Ends */}
+      <CustomDialog
+        show={openApplyJobDialog}
+        hideButton={false}
+        onDialogClose={onApplyHandleClose}
+        dialogWidth="sm"
+        showFooter={false}
+        // title={isLoggedIn ? i18n["login.login"] : i18n["login.signUp"]}
+        isApplyJob
+      > 
+        <ApplyJobs
+          questions={questions}
+          setopenApplyJobDialog={setopenApplyJobDialog}
+        />
+      </CustomDialog>
     </Grid>
+    
   );
 }

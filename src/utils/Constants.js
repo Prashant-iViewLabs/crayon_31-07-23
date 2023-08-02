@@ -679,49 +679,49 @@ export const TALENT_LEFT_JOB_APPLICATION_BUTTON_GROUP = [
     id: 2,
     name: "complete",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 3,
     name: "incomplete",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 4,
     name: "video",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 5,
     name: "no video",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 6,
     name: "crayon cam",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 7,
     name: "no crayon cam",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 8,
     name: "portfolio",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
   {
     id: 9,
     name: "no portfolio",
     color: "blueButton300",
-    title: true,
+    // title: true,
   },
 ];
 
@@ -1161,5 +1161,30 @@ export const ROLE_TYPE = [
     name: "crayon recruit",
   },
 ];
+
+export const MY_TEAMS_LEFT_PANEL = [
+  {
+    id: "Team Status",
+    name: "Team Status",
+    color: "lightGreenButton300"
+  },
+  {
+    id: "team members",
+    name: "team members"
+  },
+  {
+    id: "recruiters",
+    name: "recruiters"
+  }, 
+  {
+    id: "promoters",
+    name: "promoters"
+  },
+  {
+    id: "hired talent",
+    name: "hired talent"
+  }
+]
+
 
 export const EMP_PROFILE_STEPS = ["My info", "Company info"];

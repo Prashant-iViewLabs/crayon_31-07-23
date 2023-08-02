@@ -284,9 +284,8 @@ export default function JobCard({
           placement="top"
         >
           <Link
-            to={`/jobs/job-detail/${`${
-              job?.town?.name + " " + job?.town?.region?.name
-            }`}/${job?.job_id}`}
+            to={`/jobs/job-detail/${`${job?.town?.name + " " + job?.town?.region?.name
+              }`}/${job?.job_id}`}
             target={"_blank"}
             style={{
               textDecoration: "none",
@@ -397,17 +396,17 @@ export default function JobCard({
         <Box
           sx={
             job?.industry_jobs.length <= 1 &&
-            job?.type !== "" &&
-            job?.work_setup !== ""
+              job?.type !== "" &&
+              job?.work_setup !== ""
               ? {
-                  width: "100%",
-                  display: "flex",
-                }
+                width: "100%",
+                display: "flex",
+              }
               : {
-                  width: "100%",
-                  display: "flex",
-                  overflow: "hidden",
-                }
+                width: "100%",
+                display: "flex",
+                overflow: "hidden",
+              }
           }
         >
           {arrSlider
@@ -420,8 +419,8 @@ export default function JobCard({
                       item?.industry?.name
                         ? "blueButton600"
                         : item === ""
-                        ? ""
-                        : "blueButton700"
+                          ? ""
+                          : "blueButton700"
                     }
                     height={25}
                     // label={item?.industry ? item?.industry?.name : item}
@@ -485,17 +484,17 @@ export default function JobCard({
         <Box
           sx={
             job?.job_traits.length <= 1 &&
-            job?.primary?.name !== "" &&
-            job?.shadow?.name !== ""
+              job?.primary?.name !== "" &&
+              job?.shadow?.name !== ""
               ? {
-                  width: "65%",
-                  display: "flex",
-                }
+                width: "65%",
+                display: "flex",
+              }
               : {
-                  width: "65%",
-                  display: "flex",
-                  overflow: "hidden",
-                }
+                width: "65%",
+                display: "flex",
+                overflow: "hidden",
+              }
           }
         >
           {arrSlider2
@@ -508,8 +507,8 @@ export default function JobCard({
                       item?.trait?.name
                         ? "grayButton200"
                         : index === 1
-                        ? "brownButton"
-                        : "purpleButton"
+                          ? "brownButton"
+                          : "purpleButton"
                     }
                     height={25}
                     label={item?.trait ? item?.trait?.name : item}

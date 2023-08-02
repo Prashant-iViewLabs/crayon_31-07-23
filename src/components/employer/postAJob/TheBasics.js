@@ -979,6 +979,7 @@ export default function TheBasics({ changeStep }) {
               multiple={true}
               id="tools"
               value={getToolValue()}
+              disableCloseOnSelect={true}
               onChange={handleMultipleAutoComplete}
               sx={{ width: "96%", display: "inline-table" }}
               placeholder={i18n["postAJob.tools"]}
@@ -1009,6 +1010,7 @@ export default function TheBasics({ changeStep }) {
             multiple={true}
             id="skills"
             value={getSkillValue()}
+            disableCloseOnSelect={true}
             onChange={handleMultipleAutoComplete}
             sx={{ width: "98%", display: "inline-table" }}
             placeholder={i18n["postAJob.skills"]}
@@ -1078,6 +1080,8 @@ export default function TheBasics({ changeStep }) {
               sx={{ width: "96%" }}
               placeholder={i18n["postAJob.preferredQualification"]}
               data={qualifications}
+              disableCloseOnSelect={true}
+              height={"auto"}
             ></AutoComplete>
             {errors?.find(
               (error) => error.key == "preferred_qualification_ids"

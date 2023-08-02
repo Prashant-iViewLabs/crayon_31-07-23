@@ -466,7 +466,7 @@ export default function Jobs() {
         showFooter={false}
         // title={isLoggedIn ? i18n["login.login"] : i18n["login.signUp"]}
         isApplyJob
-      >
+      > 
         <ApplyJobs
           questions={questions}
           setopenApplyJobDialog={setopenApplyJobDialog}

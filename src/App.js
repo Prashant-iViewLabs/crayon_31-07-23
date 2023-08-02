@@ -33,6 +33,9 @@ import ClosedJobs from './components/admin/adminJobs/closedJobs/ClosedJobs';
 import CandidateCVPage from './components/candidate/cvPage/CandidateCVPage';
 import JobsDetailPage from './components/guest/jobs/JobsDetailPage';
 import ManageJob from './components/employer/myJobs/ManageJob';
+import MyTeams from './components/employer/myTeams/MyTeams';
+import AddNewMember from './components/employer/myTeams/AddNewMember';
+import TeamTable from './components/employer/myTeams/TeamTable'
 
 export default function App() {
   return (
@@ -45,6 +48,10 @@ export default function App() {
 
         <Route exact path='employer' element={<PrivateRoute><Employer /></PrivateRoute>} >
           <Route path='my-jobs' element={<PrivateRoute><MyJobs /></PrivateRoute>} />
+          <Route path='my_team' element={<PrivateRoute><MyTeams /></PrivateRoute>}>
+            <Route path='' element={<PrivateRoute><TeamTable /></PrivateRoute>} />
+            <Route path='add-new-member' element={<PrivateRoute><AddNewMember /></PrivateRoute>} />
+          </Route>
           <Route path='post-a-job/:jobId?' element={<PrivateRoute><PostAJob /></PrivateRoute>} />
           <Route path='my-profile' element={<PrivateRoute><MyProfileEmp /></PrivateRoute>} />
           <Route path='manage-talent/:jobId' element={<PrivateRoute><ManageJob /></PrivateRoute>} />
@@ -64,8 +71,8 @@ export default function App() {
             <Route path='active-jobs' element={<PrivateRoute><ActiveJobs /></PrivateRoute>} />
             <Route path='active-jobs/:id' element={<PrivateRoute><ActiveJobDetail /></PrivateRoute>} />
             <Route path='pending-jobs' element={<PrivateRoute><PendingJobs /></PrivateRoute>} />
-            <Route path='paused-jobs' element={<PrivateRoute><PausedJobs/></PrivateRoute>} />
-            <Route path='closed-jobs' element={<PrivateRoute><ClosedJobs/></PrivateRoute>} />
+            <Route path='paused-jobs' element={<PrivateRoute><PausedJobs /></PrivateRoute>} />
+            <Route path='closed-jobs' element={<PrivateRoute><ClosedJobs /></PrivateRoute>} />
           </Route>
           <Route path='Search' element={<PrivateRoute><Search /></PrivateRoute>} >
             <Route path='build-search' element={<PrivateRoute><BuildSearch /></PrivateRoute>} />
