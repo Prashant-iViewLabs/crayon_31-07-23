@@ -305,7 +305,7 @@ const JobCardFront = ({
             <Box sx={{
                 display: "flex",
                 width: "100%",
-                height: "250px"
+                height: "250px",
             }}>
                 {/* Name and Info Section */}
                 <Grid marginLeft={1} marginRight={1} sx={{
@@ -427,7 +427,31 @@ const JobCardFront = ({
             />
           )}
         </Box> */}
-                    <Box mb={2}>
+                    <Box sx={{
+                        display: "flex",
+                        gap: 1,
+                        flexWrap: "wrap"
+
+                    }} mb={1}>
+                        {
+                            toolsArr.map(item => {
+                                return (
+                                    <SmallButton
+                                        color={"yellowButton300"}
+                                        height={25}
+                                        value={item?.tool?.name}
+                                        label={item?.tool?.name.split(" ")[0]}
+                                    />)
+                            })
+
+                        }
+                    </Box>
+                    <Box sx={{
+                        display: "flex",
+                        gap: 1,
+                        flexWrap: "wrap"
+
+                    }} mb={1}>
                         {
                             toolsArr.map(item => {
                                 return (
@@ -436,14 +460,18 @@ const JobCardFront = ({
                                         height={25}
                                         value={item?.tool?.name}
                                         label={item?.tool?.name.split(" ")[0]}
-                                        mr="4px"
                                     />)
                             })
 
                         }
                     </Box>
                     {/* Trait Section */}
-                    <Box>
+                    <Box sx={{
+                        display: "flex",
+                        gap: 1,
+                        flexWrap: "wrap"
+
+                    }}>
                         {
                             arrSlider2.map(item => {
                                 return (
@@ -452,8 +480,6 @@ const JobCardFront = ({
                                         height={25}
                                         value={item?.trait?.name}
                                         label={item?.trait?.name.split(" ")[0]}
-                                        mr="4px"
-                                        mt="4px"
                                     />)
                             })
 
@@ -473,13 +499,14 @@ const JobCardFront = ({
                         width: "100%",
                         height: 150,
                         padding: 0,
-                        minWidth: "20px",
+                        minWidth: "15px",
                         marginBottom: 2,
+                        fontSize:"20px",
                         borderRadius: "10px 0 0 10px",
                     }} onClick={() => setisFlipped(false)}>
                         <KeyboardArrowLeftOutlinedIcon sx={{
                             margin: 0, padding: 0
-                        }} />
+                        }} fontSize="string"/>
                     </Button>
                 </Box>
                 {/* flip Button */}
@@ -544,7 +571,7 @@ const JobCardFront = ({
                     background: "green",
                     width: "100%",
                     borderRadius: "0 0 25px 25px",
-                    height: 65,
+                    height: 50,
                 }}
             >
                 {/* <Box
@@ -590,17 +617,20 @@ const JobCardFront = ({
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
-                }} color="blueButton200">Match Now</Button>
+                    height: "100%",
+                    fontSize: "12px"
+                }} color="blueButton200">Match me</Button>
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
+                    height: "100%",
+                    fontSize: "12px"
                 }} color="grayButton200">View More</Button>
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
+                    height: "100%",
+                    fontSize: "12px"
                 }} color="redButton"
                     onClick={handleClick}>apply</Button>
             </Grid>

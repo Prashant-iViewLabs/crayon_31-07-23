@@ -75,7 +75,7 @@ export default function JobsDetailPage() {
 
   const getquestions = async () => {
     const { payload } = await dispatch(getAllQuestions(job?.job_id));
-    if (payload?.status == "success") {
+    if (payload?.status === "success") {
       setQuestions(payload.data);
     } else {
       dispatch(
@@ -104,8 +104,8 @@ export default function JobsDetailPage() {
     }
   };
   const handleClick = () => {
-        setopenApplyJobDialog(true);
-        getquestionswithoutlogin()
+    setopenApplyJobDialog(true);
+    getquestionswithoutlogin()
   };
   const onApplyHandleClose = () => {
     setopenApplyJobDialog(false);
@@ -124,7 +124,7 @@ export default function JobsDetailPage() {
         onHandleClose();
         const jwt = localStorage?.getItem("token");
         const parts = jwt?.split(".");
-        if (parts?.length != 3) {
+        if (parts?.length !== 3) {
           throw new Error("Invalid JWT");
         }
         const encodedPayload = parts[1];
@@ -205,14 +205,15 @@ export default function JobsDetailPage() {
   }, []);
 
   return (
+
     <Grid
+      xs={12} sm={6} md={8} lg={9} xl={10}
       container
       sx={{
         borderRadius: "10px",
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-        width: "80%",
-        margin: "auto",
         padding: "10px 50px",
+        height: "fit-content",
         justifyContent: "space-between",
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -1213,13 +1214,13 @@ export default function JobsDetailPage() {
         showFooter={false}
         // title={isLoggedIn ? i18n["login.login"] : i18n["login.signUp"]}
         isApplyJob
-      > 
+      >
         <ApplyJobs
           questions={questions}
           setopenApplyJobDialog={setopenApplyJobDialog}
         />
       </CustomDialog>
     </Grid>
-    
+
   );
 }

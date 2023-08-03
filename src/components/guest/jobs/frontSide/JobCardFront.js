@@ -27,7 +27,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import TextWrapper from "../../../common/TextWrapper";
 import { convertDatetimeAgo } from "../../../../utils/DateTime";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAlert } from "../../../../redux/configSlice";
 import { favouriteJob } from "../../../../redux/guest/talentSlice";
 import jwt_decode from "jwt-decode";
@@ -35,6 +35,7 @@ import { formatCurrencyWithCommas } from "../../../../utils/Currency";
 import DOMPurify from "dompurify";
 
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import { he } from "date-fns/locale";
 const label1 = "applied";
@@ -51,6 +52,7 @@ const JobCardFront = ({
 }) => {
     const i18n = locale.en;
     const theme = useTheme();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
     const [isStar, setIsStarSelected] = useState(job?.favourite);
@@ -142,6 +144,10 @@ const JobCardFront = ({
         };
     }
 
+    const handleJobTitle = () => {
+        navigate(`/jobs/job-detail/${`${job?.town?.name + " " + job?.town?.region?.name
+            }`}/${job?.job_id}`)
+    }
     return (
         <CustomCard
             handleMouseEnter={() => setIsHovered(true)}
@@ -303,7 +309,9 @@ const JobCardFront = ({
                 height: "250px"
             }}>
 
-                <Grid marginLeft={1} marginRight={1} >
+                <Grid marginLeft={1} marginRight={1} sx={{
+                    flexGrow: 1
+                }}>
 
                     <Tooltip
                         arrow
@@ -312,30 +320,21 @@ const JobCardFront = ({
                         title={job?.title}
                         placement="top"
                     >
-                        <Link
-                            to={`/jobs/job-detail/${`${job?.town?.name + " " + job?.town?.region?.name
-                                }`}/${job?.job_id}`}
-                            target={"_blank"}
-                            style={{
-                                textDecoration: "none",
-                                color: theme.palette.black,
+                        <Typography
+                            sx={{
+                                // minHeight: "60px",
+                                fontWeight: 700,
+                                fontSize: 20,
+                                overflow: "hidden",
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 1,
                             }}
+                            gutterBottom
+                            onClick={handleJobTitle}
                         >
-                            <Typography
-                                sx={{
-                                    // minHeight: "60px",
-                                    fontWeight: 700,
-                                    fontSize: 20,
-                                    overflow: "hidden",
-                                    display: "-webkit-box",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 1,
-                                }}
-                                gutterBottom
-                            >
-                                {job?.title}
-                            </Typography>
-                        </Link>
+                            {job?.title}
+                        </Typography>
                     </Tooltip>
                     <Typography
                         sx={{
@@ -489,13 +488,17 @@ const JobCardFront = ({
                         width: "100%",
                         height: 150,
                         padding: 0,
-                        minWidth: "20px",
+                        minWidth: "15px",
                         marginBottom: 2,
-                        borderRadius: "10px 0 0 10px",
+                        fontSize: "20px",
+                        borderRadius: "5px 0 0 5px",
                     }} onClick={() => setisFlipped(true)}>
-                        <KeyboardArrowRightOutlinedIcon sx={{
-                            margin: 0, padding: 0
-                        }} />
+                        <NavigateNextIcon  sx={{
+                            margin: 0, padding: 0,
+                        }} 
+                        fontSize="string"
+                        />
+                        {/* &#62; */}
                     </Button>
                 </Box>
             </Box>
@@ -631,7 +634,7 @@ const JobCardFront = ({
                     background: "green",
                     width: "100%",
                     borderRadius: "0 0 25px 25px",
-                    height: 65,
+                    height: 50,
                 }}
             >
                 {/* <Box
@@ -677,17 +680,20 @@ const JobCardFront = ({
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
-                }} color="blueButton200">Match Now</Button>
+                    height: "100%",
+                    fontSize:"12px"
+                }} color="blueButton200">Match me</Button>
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
+                    height: "100%",
+                    fontSize:"12px"
                 }} color="grayButton200">View More</Button>
                 <Button variant="contained" sx={{
                     borderRadius: 0,
                     width: "33.33%",
-                    height: "100%"
+                    height: "100%",
+                    fontSize:"12px"
                 }} color="redButton"
                     onClick={handleClick}>apply</Button>
             </Grid>

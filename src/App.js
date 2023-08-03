@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './views/Home'
 import Main from './views/Main'
 import Jobs from './components/guest/jobs/Jobs';
+import JobListing from './components/guest/jobs/JobListing';
 import Talent from './components/guest/talent/Talent';
 import MyJobs from './components/employer/myJobs/MyJobs';
 import Search from './components/admin/search/Search';
@@ -42,7 +43,10 @@ export default function App() {
     <Routes>
       <Route exact path='/' element={<Main />} >
         <Route path='/' element={<Home />} />
-        <Route path='jobs' element={<Jobs />} />
+        <Route path='jobs' element={<Jobs />} >
+          <Route path='' element={<JobListing/>}/>
+          <Route path='job-detail/:location/:id' element={<JobsDetailPage/>}/>
+        </Route>
         <Route path='talent' element={<Talent />} />
         {/* <Route path='solutions' element={<Solutions />} /> */}
 
@@ -83,7 +87,7 @@ export default function App() {
 
         <Route path='*' element={<ComingSoon />} />
         <Route path='candidate-cv/:id' element={<CandidateCVPage />} />
-        <Route path='/:prev/job-detail/:location/:id' element={<JobsDetailPage />} />
+        {/* <Route path='/:prev/job-detail/:location/:id' element={<JobsDetailPage />} /> */}
       </Route>
       <Route path='*' element={<PrivateRoute><ComingSoon /></PrivateRoute>} />
     </Routes>
