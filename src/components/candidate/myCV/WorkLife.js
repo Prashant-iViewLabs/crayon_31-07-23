@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
-  Autocomplete,
   Box,
-  Button,
   Divider,
   IconButton,
   InputLabel,
@@ -28,6 +26,7 @@ import { getCompanies } from "../../../redux/employer/empProfileSlice";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import StyledButton from "../../common/StyledButton";
 import AutoComplete from "../../common/AutoComplete";
+
 
 const i18n = locale.en;
 
@@ -60,6 +59,8 @@ const WORK = {
 
 const WORD_LIMIT = 50;
 
+
+
 export default function WorkLife({ changeStep }) {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
@@ -67,10 +68,22 @@ export default function WorkLife({ changeStep }) {
   const [noWorkExp, setNoWorkExp] = useState(false);
   const [wordLimitExceed, setWordLimitExceed] = useState(false);
 
-  const { companies, titles } = useSelector((state) => state.myProfile);
-  console.log(companies);
-  console.log(titles);
 
+  const { companies, titles } = useSelector((state) => state.myProfile);
+
+  const calculateDuration = (index) => {
+    const end = new Date(workData[index].end_date);
+    const start = new Date(workData[index].start_date);
+  
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+  
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    return years ?`${years} years, ${months} months` : '';
+  };
   const getAllData = async () => {
     try {
       dispatch(setLoading(true));
@@ -177,7 +190,6 @@ export default function WorkLife({ changeStep }) {
       setWorkData(newWorkData);
     }
   };
-
   const handleNoExp = (event) => {
     const isChecked = event.target.checked;
     setNoWorkExp(isChecked);
@@ -354,10 +366,9 @@ export default function WorkLife({ changeStep }) {
                   !work?.company_name &&
                   errors?.find((error) => error.key == "company_name") && (
                     <Typography color={"red !important"}>
-                      {`*${
-                        errors?.find((error) => error.key == "company_name")
-                          .message
-                      }`}
+                      {`*${errors?.find((error) => error.key == "company_name")
+                        .message
+                        }`}
                     </Typography>
                   )}
               </Box>
@@ -403,9 +414,8 @@ export default function WorkLife({ changeStep }) {
                   !work?.title &&
                   errors?.find((error) => error.key == "title") && (
                     <Typography color={"red !important"}>
-                      {`*${
-                        errors?.find((error) => error.key == "title").message
-                      }`}
+                      {`*${errors?.find((error) => error.key == "title").message
+                        }`}
                     </Typography>
                   )}
               </Box>
@@ -434,29 +444,30 @@ export default function WorkLife({ changeStep }) {
               {errors?.find(
                 (error) => error.key == "clients_worked_on_awards"
               ) && (
-                <Typography color={"red !important"}>
-                  {`*${
-                    errors?.find(
+                  <Typography color={"red !important"}>
+                    {`*${errors?.find(
                       (error) => error.key == "clients_worked_on_awards"
                     ).message
-                  }`}
-                </Typography>
-              )}
+                      }`}
+                  </Typography>
+                )}
               {wordLimitExceed && (
                 <Typography color={"red !important"}>
                   Word limit {WORD_LIMIT}
                 </Typography>
               )}
             </Box>
-            <Box
+
+            {index !== 0 ? <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 mb: 3,
-                width: "100%",
+                width: "47%",
+                gap: 2
               }}
             >
-              <Box sx={{ width: "50%" }}>
+              <Box sx={{ width: "30%" }}>
                 <InputLabel
                   htmlFor="startdate"
                   sx={{
@@ -482,13 +493,13 @@ export default function WorkLife({ changeStep }) {
                         sx={{
                           "& .MuiInputBase-root": {
                             height: "40px",
-                            mr: 5,
+                            // mr: 5,
                             borderRadius: "40px",
                           },
                           "& fieldset": {
                             borderColor: "rgba(0, 0, 0, 0.26) !important",
                           },
-                          minWidth: "100% !important",
+                          // minWidth: "100% !important", 
                         }}
                       />
                     )}
@@ -497,14 +508,13 @@ export default function WorkLife({ changeStep }) {
                 {work.start_date == "" &&
                   errors?.find((error) => error.key == "start_date") && (
                     <Typography color={"red !important"}>
-                      {`*${
-                        errors?.find((error) => error.key == "start_date")
-                          .message
-                      }`}
+                      {`*${errors?.find((error) => error.key == "start_date")
+                        .message
+                        }`}
                     </Typography>
                   )}
               </Box>
-              <Box sx={{ width: "50%" }}>
+              <Box sx={{ width: "30%" }}>
                 <InputLabel
                   htmlFor="enddate"
                   sx={{
@@ -523,8 +533,9 @@ export default function WorkLife({ changeStep }) {
                     // label="end date"
                     value={work.end_date}
                     minDate={work.start_date}
-                    onChange={(newValue) =>
+                    onChange={(newValue) => {
                       handleChange(newValue, index, "end_date")
+                    }
                     }
                     renderInput={(params) => (
                       <TextField
@@ -537,7 +548,7 @@ export default function WorkLife({ changeStep }) {
                           "& fieldset": {
                             borderColor: "rgba(0, 0, 0, 0.26) !important",
                           },
-                          minWidth: "94% !important",
+                          // minWidth: "94% !important",
                         }}
                       />
                     )}
@@ -547,13 +558,40 @@ export default function WorkLife({ changeStep }) {
                 {work.end_date == "" &&
                   errors?.find((error) => error.key == "end_date") && (
                     <Typography color={"red !important"}>
-                      {`*${
-                        errors?.find((error) => error.key == "end_date").message
-                      }`}
+                      {`*${errors?.find((error) => error.key == "end_date").message
+                        }`}
                     </Typography>
                   )}
               </Box>
-            </Box>
+              <Box sx={{ width: "30%" }}>
+                <InputLabel
+                  htmlFor="enddate"
+                  sx={{
+                    color: "black",
+                    paddingLeft: "10px",
+                    paddingBottom: "2px",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Total Duration
+                </InputLabel>
+                <TextField
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      height: "40px",
+                      borderRadius: "40px",
+                    },
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.26) !important",
+                    },
+                    minWidth: "94% !important",
+                  }}
+                  value={calculateDuration(index)}
+                  placeholder="00 years, 00 months"
+                />
+              </Box>
+            </Box> : <Box></Box>}
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               {/* <IconButton
                 aria-label="edit"

@@ -11,13 +11,13 @@ import jobStatus from "./redux/status";
 import myStatus from "./redux/candidate/myStatusFilter";
 import allTypes from "./redux/allTypes";
 import allEmployerJobs from "./redux/employer/employerJobsConfigSlice";
+import allTeamMember from "./redux/employer/myTeams";
 import allEmployerJoblisting from "./redux/employer/empJobListing";
 import allQuesitons from "./redux/guest/getQuestions";
 import candidateJobs from "./redux/candidate/candidateJobs";
 import myCVNew from "./redux/candidate/myCVNew";
 import empProfileSlice from "./redux/employer/empProfileSlice";
 import postJobSlice from "./redux/employer/postJobSlice";
-
 export const store = configureStore({
   reducer: {
     config: configReducer,
@@ -38,5 +38,6 @@ export const store = configureStore({
     configMyStatus: myStatus,
     myProfile: empProfileSlice,
     postJobs: postJobSlice,
+    configMyTeams: allTeamMember,
   },
 });

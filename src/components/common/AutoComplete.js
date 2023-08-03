@@ -29,6 +29,7 @@ export default function AutoComplete({
   allowCustomInput = true,
   index,
   showAddOption = false,
+  disableCloseOnSelect,
 }) {
   const theme = useTheme();
   return (
@@ -54,7 +55,7 @@ export default function AutoComplete({
           },
         }}
         disabled={disabled}
-        disableCloseOnSelect={false}
+        disableCloseOnSelect={disableCloseOnSelect}
         allowCustomInput={allowCustomInput}
         size="small"
         id={id}

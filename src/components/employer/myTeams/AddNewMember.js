@@ -45,7 +45,7 @@ const AddNewMember = () => {
     }
 
     const handleCancelButton = ()=> {
-        navigate('')
+        navigate('/employer/my_team')
     }
     return (
         // <Grid

@@ -444,29 +444,7 @@ export default function ProfileCard() {
   };
 
   const renderFooter = (
-    <Box>
-      <Button
-        onClick={() => {
-          setImageName("My pic");
-          setOpenEditImage(false);
-        }}
-        disableElevation
-        variant="outlined"
-        color="redButton"
-        sx={{ width: "130px", mr: 2 }}
-      >
-        {i18n["empMyProfile.cancel"]}
-      </Button>
-      <Button
-        onClick={handleImageEdit}
-        disableElevation
-        variant="contained"
-        color="redButton"
-        sx={{ width: "130px" }}
-      >
-        {i18n["empMyProfile.upload"]}
-      </Button>
-    </Box>
+    <></>
   );
 
   // const handleAccordion = () => {
@@ -945,8 +923,9 @@ export default function ProfileCard() {
             <Box
               sx={{
                 position: "relative",
-                height: "20%",
+                // height: "20%",
                 display: "flex",
+                paddingTop: 2,
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -980,6 +959,33 @@ export default function ProfileCard() {
               </Button>
               <Button variant="text" onClick={() => setZoom(1)}>
                 Reset
+              </Button>
+            </Box>
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: 2
+            }}>
+              <Button
+                onClick={() => {
+                  setImageName("My pic");
+                  setOpenEditImage(false);
+                }}
+                disableElevation
+                variant="outlined"
+                color="redButton"
+                sx={{ width: "130px", mr: 2 }}
+              >
+                {i18n["empMyProfile.cancel"]}
+              </Button>
+              <Button
+                onClick={handleImageEdit}
+                disableElevation
+                variant="contained"
+                color="redButton"
+                sx={{ width: "130px" }}
+              >
+                {i18n["empMyProfile.upload"]}
               </Button>
             </Box>
           </CustomDialog>

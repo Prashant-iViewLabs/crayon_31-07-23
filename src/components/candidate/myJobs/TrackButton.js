@@ -133,6 +133,7 @@ const TrackButton = ({ job }) => {
                   endIcon={job?.cvCompleted ? <CheckIcon /> : ""}
                 >
                   {" "}
+                  Crayon vitae
                 </Button>
               ) : (
                 <Link to={"/candidate/my-cv"}>

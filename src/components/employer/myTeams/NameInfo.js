@@ -7,7 +7,7 @@ const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
 };
-const NameInfo = ({ name, email }) => {
+const NameInfo = ({ avatarInitial, name, email }) => {
 
     const randomColor = getRandomColor();
     return (
@@ -16,7 +16,7 @@ const NameInfo = ({ name, email }) => {
             gap: 2,
             alignItems: "center"
         }}>
-            <Avatar sx={{ bgcolor: randomColor }}>{name[0]}</Avatar>
+            <Avatar>{avatarInitial}</Avatar>
             <Box>
                 <Typography sx={{
                     fontWeight: "Bold",
