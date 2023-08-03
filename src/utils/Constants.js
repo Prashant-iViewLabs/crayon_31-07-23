@@ -1170,19 +1170,23 @@ export const MY_TEAMS_LEFT_PANEL = [
   },
   {
     id: "team members",
-    name: "team members"
+    name: "team members",
+    color: "lightGreenButton300"
   },
   {
     id: "recruiters",
-    name: "recruiters"
+    name: "recruiters",
+    color: "lightGreenButton300"
   }, 
   {
     id: "promoters",
-    name: "promoters"
+    name: "promoters",
+    color: "lightGreenButton300"
   },
   {
     id: "hired talent",
-    name: "hired talent"
+    name: "hired talent",
+    color: "lightGreenButton300"
   }
 ]
 

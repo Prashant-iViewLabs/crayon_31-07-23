@@ -10,6 +10,7 @@ import { ALERT_TYPE, ERROR_MSG } from "../../../utils/Constants";
 import { useEffect } from "react";
 import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 function createData(id, user, Status, dateAdded, lastActive, permissions) {
   console.log(permissions);
   return {
@@ -129,16 +130,17 @@ const TeamTable = () => {
           }}
         >
           {/* <Link to={`add-new-member`}> */}
+          
+          {/* </Link> */}
+          <Button variant="contained" color="grayButton200" startIcon={<ArrowDownwardIcon />}>
+            download CSV
+          </Button>
           <Button
             variant="contained"
             color="redButton"
             onClick={handleAddNewMemberClick}
           >
             add new member
-          </Button>
-          {/* </Link> */}
-          <Button variant="contained" color="grayButton">
-            download CSV
           </Button>
         </Box>
       </Box>

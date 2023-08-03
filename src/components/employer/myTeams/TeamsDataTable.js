@@ -52,11 +52,11 @@ const columns = [
       )
     }
   },
-  { field: 'dateAdded', headerName: 'Date Added', width: 200 },
+  { field: 'dateAdded', headerName: 'Date Added', width: 190 },
   {
     field: 'lastActive',
     headerName: 'Last Active',
-    width: 200,
+    width: 190,
   },
   {
     field: 'permissions',

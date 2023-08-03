@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useTheme } from "@mui/material/styles";
-import JobCard from "./JobCard";
+import JobCard from "./JobCardNew";
 import SearchBar from "../../common/SearchBar";
 import ButtonPanel from "../../common/ButtonPanel";
 import {

@@ -19,6 +19,7 @@ import {
   setLoading,
 } from "../../../redux/employer/employerJobsConfigSlice";
 import { ALERT_TYPE, ERROR_MSG } from "../../../utils/Constants";
+import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -144,10 +145,10 @@ export default function ButtomMenu({ index, companyId }) {
         elevation={0}
         onClick={(e) => handleClick(e, companyId)}
         endIcon={<KeyboardArrowDownIcon />}
-        color="blueButton400"
-        sx={{ ml: 1, boxShadow: 0, width: "82px" }}
+        color="grayButton200"
+        sx={{ borderRadius: 0, boxShadow: 0, padding: 0 }}
       >
-        {i18n["teamMenu.label"]}
+        <PermContactCalendarOutlinedIcon sx={{ padding: 0}}/>
       </Button>
       <StyledMenu
         id="customized-menu"

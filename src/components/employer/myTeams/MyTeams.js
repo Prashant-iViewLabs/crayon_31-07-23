@@ -1,17 +1,14 @@
 import React from 'react'
 
-import { Grid, Box, Typography, Button, Divider } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 
 import ButtonPanel from '../../common/ButtonPanel'
+
+import { Outlet } from 'react-router-dom';
 
 import {
     MY_TEAMS_LEFT_PANEL
 } from "../../../utils/Constants";
-import SmallButton from '../../common/SmallButton';
-import TeamsDataTable from './TeamsDataTable';
-import { Link, Outlet } from 'react-router-dom';
-import TeamTable from './TeamTable';
-
 
 const InviteStatus = [
     {
@@ -52,7 +49,7 @@ const MyTeams = () => {
                 <ButtonPanel
                     panelData={InviteStatus}
                     side="right"
-                    
+
                 // onChangeFilter={}
                 />
             </Box>

@@ -45,6 +45,7 @@ const SelectPermission = ({selectedPermission}) => {
     return (
         <Select
             defaultValue={1}
+            color='grayButton200'
             input={<BootstrapInput />}
             sx={{
                 width: 200
