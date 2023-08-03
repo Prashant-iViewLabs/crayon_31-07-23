@@ -8,7 +8,7 @@ const sxPaper = {
     border: '1px solid rgba(224, 224, 224, 0.75)',
     boxShadow: '0px 0px 12px rgba(0, 0, 0, 0.03)',
     borderRadius: '25px',
-    padding: '10px 0',
+    // padding: '10px 0',
     "&:hover": {
         cursor: 'pointer',
         boxShadow: 15,//'rgb(0 0 0 / 24%) 0px 12px 24px',
