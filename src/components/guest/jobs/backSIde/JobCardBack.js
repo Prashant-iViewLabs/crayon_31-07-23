@@ -27,7 +27,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import TextWrapper from "../../../common/TextWrapper";
 import { convertDatetimeAgo } from "../../../../utils/DateTime";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAlert } from "../../../../redux/configSlice";
 import { favouriteJob } from "../../../../redux/guest/talentSlice";
 import jwt_decode from "jwt-decode";
@@ -42,6 +42,7 @@ import profile_challenger from "../../../../assets/Profile Icons_Challenger.svg"
 import profile_character from "../../../../assets/Profile Icons_Charater.svg";
 import profile_collaborator from "../../../../assets/Profile Icons_Collaborator.svg";
 import profile_contemplator from "../../../../assets/Profile Icons_Contemplator.svg";
+import { Hidden } from "@mui/material";
 
 const label1 = "applied";
 const label2 = "shortlisted";
@@ -57,6 +58,8 @@ const JobCardFront = ({
 }) => {
     const i18n = locale.en;
     const theme = useTheme();
+
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [isHovered, setIsHovered] = useState(false);
     const [isStar, setIsStarSelected] = useState(job?.favourite);
@@ -134,15 +137,20 @@ const JobCardFront = ({
         }
     };
 
-    // const handleRightClick = () => {
-    //     setArrSlider2([...arrSlider2.slice(1), ...arrSlider2.slice(0, 1)]);
-    // };
-    // const handleLeftClick = () => {
-    //     setArrSlider2([
-    //         ...arrSlider2.slice(arrSlider2.length - 1),
-    //         ...arrSlider2.slice(0, arrSlider2.length - 1),
-    //     ]);
-    // };
+    const handleRightClick = ((setFunc, arrName) => {
+        setFunc([...arrName.slice(1), ...arrName.slice(0, 1)]);
+    });
+    const handleLeftClick = (setFunc, arrName) => {
+        setFunc([
+            ...arrName.slice(arrName.length - 1),
+            ...arrName.slice(0, arrName.length - 1),
+        ]);
+    };
+
+    const handleJobTitle = () => {
+        navigate(`/jobs/job-detail/${`${job?.town?.name + " " + job?.town?.region?.name
+            }`}/${job?.job_id}`)
+    }
 
     return (
         <CustomCard
@@ -318,30 +326,21 @@ const JobCardFront = ({
                         title={job?.title}
                         placement="top"
                     >
-                        <Link
-                            to={`/jobs/job-detail/${`${job?.town?.name + " " + job?.town?.region?.name
-                                }`}/${job?.job_id}`}
-                            target={"_blank"}
-                            style={{
-                                textDecoration: "none",
-                                color: theme.palette.black,
+                        <Typography
+                            sx={{
+                                // minHeight: "60px",
+                                fontWeight: 700,
+                                fontSize: 20,
+                                overflow: "hidden",
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 1,
                             }}
+                            gutterBottom
+                            onClick={handleJobTitle}
                         >
-                            <Typography
-                                sx={{
-                                    // minHeight: "60px",
-                                    fontWeight: 700,
-                                    fontSize: 20,
-                                    overflow: "hidden",
-                                    display: "-webkit-box",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 1,
-                                }}
-                                gutterBottom
-                            >
-                                {job?.title}
-                            </Typography>
-                        </Link>
+                            {job?.title}
+                        </Typography>
                     </Tooltip>
                     <Typography
                         sx={{
@@ -398,93 +397,171 @@ const JobCardFront = ({
                             {job?.town?.name}, {job?.town?.region?.name}
                         </Typography>
                     </Box>
-                    {/* <Box sx={{ display: "flex", marginTop: "-5px" }}>
-          {job?.industry_job?.industry?.name && (
-            <>
-              <SmallButton
-                color="blueButton600"
-                height={25}
-                label={ job?.industry_job?.industry?.name
-                }
-                mr="4px"
-              />
-            </>
-          )}
-          {job?.type && (
-            <SmallButton
-              color="blueButton700"
-              height={25}
-              label={job?.type}
-              mr="4px"
-            />
-          )}
-          {job?.work_setup && (
-            <SmallButton
-              color="blueButton700"
-              height={25}
-              label={job?.work_setup}
-              mr="4px"
-            />
-          )}
-        </Box> */}
-                    <Box sx={{
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap"
 
-                    }} mb={1}>
-                        {
-                            toolsArr.map(item => {
-                                return (
-                                    <SmallButton
-                                        color={"yellowButton300"}
-                                        height={25}
-                                        value={item?.tool?.name}
-                                        label={item?.tool?.name.split(" ")[0]}
-                                    />)
-                            })
-
+                    {/* Tools section */}
+                    <Grid
+                        container
+                        spacing={2}
+                        padding="0 8px 8px 0px"
+                        minHeight={45}
+                        mt={3}
+                        sx={
+                            toolsArr.length >= 4
+                                ? { justifyContent: "space-evenly", alignItems: "center" }
+                                : { ml: 2 }
                         }
-                    </Box>
-                    <Box sx={{
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap"
-
-                    }} mb={1}>
-                        {
-                            toolsArr.map(item => {
-                                return (
-                                    <SmallButton
-                                        color={"yellowButton200"}
-                                        height={25}
-                                        value={item?.tool?.name}
-                                        label={item?.tool?.name.split(" ")[0]}
-                                    />)
-                            })
-
-                        }
-                    </Box>
+                    >
+                        {toolsArr.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                    ml: 1,
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleLeftClick(setToolsArr, toolsArr)}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </IconButton>
+                        ) : null}
+                        <Box
+                            sx={
+                                job?.job_traits.length <= 1
+                                    ? {
+                                        width: "65%",
+                                        display: "flex"
+                                    }
+                                    : {
+                                        width: "65%",
+                                        display: "flex",
+                                        overflow: "hidden",
+                                        alignItems: "center"
+                                    }
+                            }
+                        >
+                            {toolsArr
+                                .filter((item) => item !== null)
+                                .map((item, index) => {
+                                    if (item !== undefined) {
+                                        return (
+                                            <SmallButton
+                                                color={
+                                                    item?.trait?.name
+                                                        ? "grayButton200"
+                                                        : index === 1
+                                                            ? "brownButton"
+                                                            : "purpleButton"
+                                                }
+                                                height={25}
+                                                value={item?.tool?.name}
+                                                label={item?.tool?.name.split(" ")[0]}
+                                                mr="4px"
+                                            />
+                                        );
+                                    }
+                                })}
+                        </Box>
+                        {toolsArr.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                    mr: 1,
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleRightClick(setToolsArr, toolsArr)}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </IconButton>
+                        ) : null}
+                    </Grid>
+                    {/* Tools Section */}
                     {/* Trait Section */}
-                    <Box sx={{
-                        display: "flex",
-                        gap: 1,
-                        flexWrap: "wrap"
-
-                    }}>
-                        {
-                            arrSlider2.map(item => {
-                                return (
-                                    <SmallButton
-                                        color={"grayButton200"}
-                                        height={25}
-                                        value={item?.trait?.name}
-                                        label={item?.trait?.name.split(" ")[0]}
-                                    />)
-                            })
-
+                    <Grid
+                        container
+                        spacing={2}
+                        padding="0 8px 8px 0px"
+                        minHeight={45}
+                        mt={3}
+                        sx={
+                            arrSlider2.length >= 4
+                                ? { justifyContent: "space-evenly", alignItems: "center" }
+                                : { ml: 2 }
                         }
-                    </Box>
+                    >
+                        {arrSlider2.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                    ml: 1,
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleLeftClick(setArrSlider2, arrSlider2)}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </IconButton>
+                        ) : null}
+                        <Box
+                            sx={
+                                job?.job_traits.length <= 1 
+                                    ? {
+                                        width: "65%",
+                                        display: "flex"
+                                    }
+                                    : {
+                                        width: "65%",
+                                        display: "flex",
+                                        overflow: "hidden",
+                                        alignItems: "center"
+                                    }
+                            }
+                        >
+                            {arrSlider2
+                                .filter((item) => item !== null)
+                                .map((item, index) => {
+                                    if (item !== undefined) {
+                                        return (
+                                            <SmallButton
+                                                color={"grayButton200"}
+                                                height={25}
+                                                label={item?.trait?.name}
+                                                mr="4px"
+                                            />
+                                        );
+                                    }
+                                })}
+                        </Box>
+                        {arrSlider2.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                    mr: 1,
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleRightClick(setArrSlider2, arrSlider2)}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </IconButton>
+                        ) : null}
+                    </Grid>
                     {/* Trait Section */}
 
 
@@ -501,12 +578,12 @@ const JobCardFront = ({
                         padding: 0,
                         minWidth: "15px",
                         marginBottom: 2,
-                        fontSize:"20px",
+                        fontSize: "20px",
                         borderRadius: "10px 0 0 10px",
                     }} onClick={() => setisFlipped(false)}>
                         <KeyboardArrowLeftOutlinedIcon sx={{
                             margin: 0, padding: 0
-                        }} fontSize="string"/>
+                        }} fontSize="string" />
                     </Button>
                 </Box>
                 {/* flip Button */}

@@ -37,7 +37,7 @@ import DOMPurify from "dompurify";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import { he } from "date-fns/locale";
+
 const label1 = "applied";
 const label2 = "shortlisted";
 const label3 = "interviewed";
@@ -131,12 +131,7 @@ const JobCardFront = ({
     const handleRightClick = () => {
         setArrSlider2([...arrSlider2.slice(1), ...arrSlider2.slice(0, 1)]);
     };
-    const handleLeftClick = () => {
-        setArrSlider2([
-            ...arrSlider2.slice(arrSlider2.length - 1),
-            ...arrSlider2.slice(0, arrSlider2.length - 1),
-        ]);
-    };
+    
 
     function createMarkup(html) {
         return {
