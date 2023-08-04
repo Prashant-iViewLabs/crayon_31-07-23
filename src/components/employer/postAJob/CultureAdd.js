@@ -450,6 +450,7 @@ export default function CultureAdd({ changeStep }) {
               placeholder={i18n["postAJob.preferredTraits"]}
               data={traits}
               limitTags={5}
+              disableCloseOnSelect={true}
             ></AutoComplete>
 
             {getTraitsValue() == "" &&

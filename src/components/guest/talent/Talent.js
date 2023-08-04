@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import TalentCard from "./TalentCard";
 import { useTheme } from "@mui/material/styles";
+
+import TalentCard from "./TalentCardNew";
 import SearchBar from "../../common/SearchBar";
 import SwipeableViews from "react-swipeable-views";
 import ButtonPanel from "../../common/ButtonPanel";
@@ -32,6 +33,7 @@ import { get } from "lodash";
 import jwt_decode from "jwt-decode";
 import { getAllTypes } from "../../../redux/allTypes";
 import { getAllTalentType } from "../../../redux/guest/talentTypes";
+import { Outlet } from "react-router-dom";
 
 export default function Talent() {
   const i18n = locale.en;
@@ -190,51 +192,51 @@ export default function Talent() {
         />
       </Box>
       <Grid xs={12} sm={6} md={8} lg={9} xl={10}>
-        <SearchBar placeholder={i18n["jobs.searchPlaceholder"]} />
-        <InfiniteScroll
-          key={`${filters} + ${filtersType} + ${filtersJobType}`}
-          style={{ overflow: "hidden" }}
-          dataLength={all_talent.length}
-          next={() => getTalent(filters, filtersType, filtersJobType, lastKey)}
-          hasMore={true}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          <Grid
-            container
-            spacing={2}
-            flexDirection={{ sx: "column", md: "row" }}
-            sx={{
-              my: 2,
-              display: { xs: "none", md: "flex" },
-              marginTop: "60px",
-            }}
-          >
-            {all_talent.length > 0 ? (
-              all_talent?.map((talent) => (
-                <Grid xl={3} lg={4} md={6} xs={12} key={talent}>
-                  <TalentCard index={talent} job={talent} />
+            <SearchBar placeholder={i18n["jobs.searchPlaceholder"]} />
+            <InfiniteScroll
+                key={`${filters} + ${filtersType} + ${filtersJobType}`}
+                style={{ overflow: "hidden" }}
+                dataLength={all_talent.length}
+                next={() => getTalent(filters, filtersType, filtersJobType, lastKey)}
+                hasMore={true}
+                endMessage={
+                    <p style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                <Grid
+                    container
+                    spacing={2}
+                    flexDirection={{ sx: "column", md: "row" }}
+                    sx={{
+                        my: 2,
+                        display: { xs: "none", md: "flex" },
+                        marginTop: "60px",
+                    }}
+                >
+                    {all_talent.length > 0 ? (
+                        all_talent?.map((talent) => (
+                            <Grid xl={3} lg={4} md={6} xs={12} key={talent}>
+                                <TalentCard index={talent} job={talent} />
+                            </Grid>
+                        ))
+                    ) : (
+                        <Box
+                            sx={{
+                                width: "100%",
+                                textAlign: "center",
+                                mt: 4,
+                                color: theme.palette.placeholder,
+                            }}
+                        >
+                            {i18n["jobs.noData"]}
+                        </Box>
+                    )}
                 </Grid>
-              ))
-            ) : (
-              <Box
-                sx={{
-                  width: "100%",
-                  textAlign: "center",
-                  mt: 4,
-                  color: theme.palette.placeholder,
-                }}
-              >
-                {i18n["jobs.noData"]}
-              </Box>
-            )}
-          </Grid>
-        </InfiniteScroll>
-        <Grid container spacing={2} sx={{ my: 2, display: { md: "none" } }}>
-          {/* <SwipeableViews enableMouseEvents onTouchStart={isolateTouch}>
+            </InfiniteScroll>
+            <Grid container spacing={2} sx={{ my: 2, display: { md: "none" } }}>
+                {/* <SwipeableViews enableMouseEvents onTouchStart={isolateTouch}>
             <Grid xl={3} lg={4} md={6} xs={12} sx={{ px: 3 }}>
               <TalentCard index="11" />
             </Grid>
@@ -254,8 +256,8 @@ export default function Talent() {
               <TalentCard index="16" />
             </Grid>
           </SwipeableViews> */}
+            </Grid>
         </Grid>
-      </Grid>
       <Box>
         <ButtonPanel
           topMargin={true}

@@ -153,10 +153,11 @@ const JobCardFront = ({
                 // padding={1}
                 justifyContent="space-between"
                 alignItems="start"
+
                 overflow={"hidden"}
                 sx={{
                     borderRadius: "25px 25px 0 0",
-                    gap: 3
+                    gap: 2
                 }}
             >
                 <Box
@@ -174,14 +175,16 @@ const JobCardFront = ({
                     src={job?.profile_url !== "No URL" ? job?.profile_url : job_logo}
                 />
                 <Box sx={{
-                    flexGrow: 1
+                    flexGrow: 1,
                 }}>
                     <Box sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                     }}>
-                        <Box>
+                        <Box sx={{
+                            display: "flex"
+                        }}>
 
                             {job?.job_type === "crayon recruit" ? (
                                 <SmallButton
@@ -386,36 +389,6 @@ const JobCardFront = ({
                             {job?.town?.name}, {job?.town?.region?.name}
                         </Typography>
                     </Box>
-                    {/* <Box sx={{ display: "flex", marginTop: "-5px" }}>
-          {job?.industry_job?.industry?.name && (
-            <>
-              <SmallButton
-                color="blueButton600"
-                height={25}
-                label={ job?.industry_job?.industry?.name
-                }
-                mr="4px"
-              />
-            </>
-          )}
-          {job?.type && (
-            <SmallButton
-              color="blueButton700"
-              height={25}
-              label={job?.type}
-              mr="4px"
-            />
-          )}
-          {job?.work_setup && (
-            <SmallButton
-              color="blueButton700"
-              height={25}
-              label={job?.work_setup}
-              mr="4px"
-            />
-          )}
-        </Box> */}
-
                     <Box
                         sx={
                             job?.industry_jobs.length <= 1 &&

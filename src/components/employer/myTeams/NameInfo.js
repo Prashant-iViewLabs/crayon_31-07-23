@@ -1,22 +1,33 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import { Avatar, Box, Typography } from '@mui/material'
 
-const getRandomColor = () => {
-    const colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'teal'];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-};
+function getColorByIndex(index) {
+    // Define an array of colors
+    const colors = [
+      '#FF5733', // Red
+      '#4ea35d', // Green
+      '#8268ff', // Blue
+      '#ff83ca', // Pink
+      '#00b3b3', // Cyan
+    ];
+  
+    const colorIndex = index % colors.length;
+    return colors[colorIndex];
+  }
+  
 const NameInfo = ({ avatarInitial, name, email }) => {
 
-    const randomColor = getRandomColor();
+    const [randomColor] = useState(() => getColorByIndex(Math.floor(Math.random() * 1000)));
     return (
         <Box sx={{
             display: "flex",
             gap: 2,
             alignItems: "center"
         }}>
-            <Avatar>{avatarInitial}</Avatar>
+            <Avatar sx={{
+                background:randomColor
+            }}>{avatarInitial}</Avatar>
             <Box>
                 <Typography sx={{
                     fontWeight: "Bold",

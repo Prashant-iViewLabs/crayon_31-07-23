@@ -69,12 +69,16 @@ const JobCardFront = ({
         job?.work_setup,
     ]);
     // console.log(job?.job_traits[0].trait?.name)
+    const [jobTagsArr, setJobTags] = useState([
+        ...(job?.job_tags || []),
+    ])
     const [arrSlider2, setArrSlider2] = useState([
         ...(job?.job_traits || []),
     ]);
     const [toolsArr, setToolsArr] = useState([
         ...(job?.job_tools || []),
     ]);
+
 
     const token = localStorage?.getItem("token");
     let decodedToken;
@@ -191,7 +195,9 @@ const JobCardFront = ({
                         alignItems: "center",
                         justifyContent: "space-between",
                     }}>
-                        <Box>
+                        <Box sx={{
+                            display: "flex"
+                        }}>
 
                             {job?.job_type === "crayon recruit" ? (
                                 <SmallButton
@@ -398,17 +404,98 @@ const JobCardFront = ({
                         </Typography>
                     </Box>
 
-                    {/* Tools section */}
+
+                    {/* Tags section */}
+                    <Grid
+                        container
+                        spacing={2}
+                        padding="0 8px 8px 0px"
+                        // minHeight={45}
+                        // mt={3}
+                        sx={
+                            toolsArr.length >= 4
+                                ? { justifyContent: "space-between", alignItems: "center" }
+                                : {}
+                        }
+                    >
+                        {jobTagsArr.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleLeftClick(setJobTags, jobTagsArr)}
+                            >
+                                <KeyboardArrowLeftIcon />
+                            </IconButton>
+                        ) : null}
+                        <Box
+                            sx={
+                                job?.job_tags.length >= 4
+                                    ? {
+                                        width: "75%",
+                                        display: "flex",
+                                        overflow: "hidden"
+                                    }
+                                    : {
+                                        width: "90%",
+                                        display: "flex",
+                                        overflow: "hidden",
+                                        alignItems: "center"
+                                    }
+                            }
+                        >
+                            {jobTagsArr
+                                .filter((item) => item !== null)
+                                .map((item, index) => {
+                                    if (item !== undefined) {
+                                        return (
+                                            <SmallButton
+                                                color="yellowButton200"
+                                                height={25}
+                                                value={item?.tag?.tag}
+                                                label={item?.tag?.tag.split(" ")[0]}
+                                                mr="4px"
+                                            />
+                                        );
+                                    }
+                                })}
+                        </Box>
+                        {jobTagsArr.length >= 4 ? (
+                            <IconButton
+                                sx={{
+                                    border: `1px solid ${theme.palette.grayBorder}`,
+                                    borderRadius: "8px",
+                                    width: "27px",
+                                    height: "27px",
+                                }}
+                                color="redButton100"
+                                aria-label="search job"
+                                component="button"
+                                onClick={() => handleRightClick(setJobTags, jobTagsArr)}
+                            >
+                                <KeyboardArrowRightIcon />
+                            </IconButton>
+                        ) : null}
+                    </Grid>
+                    {/* Tags section */}
+                    {/* Tools Section */}
+
                     <Grid
                         container
                         spacing={2}
                         padding="0 8px 8px 0px"
                         minHeight={45}
-                        mt={3}
+                        // mt={3}
                         sx={
                             toolsArr.length >= 4
-                                ? { justifyContent: "space-evenly", alignItems: "center" }
-                                : { ml: 2 }
+                                ? { justifyContent: "space-between", alignItems: "center" }
+                                : {}
                         }
                     >
                         {toolsArr.length >= 4 ? (
@@ -418,7 +505,6 @@ const JobCardFront = ({
                                     borderRadius: "8px",
                                     width: "27px",
                                     height: "27px",
-                                    ml: 1,
                                 }}
                                 color="redButton100"
                                 aria-label="search job"
@@ -428,18 +514,20 @@ const JobCardFront = ({
                                 <KeyboardArrowLeftIcon />
                             </IconButton>
                         ) : null}
+
                         <Box
                             sx={
-                                job?.job_traits.length <= 1
+                                job?.job_tools.length >= 4
                                     ? {
-                                        width: "65%",
-                                        display: "flex"
-                                    }
-                                    : {
-                                        width: "65%",
+                                        width: "75%",
                                         display: "flex",
                                         overflow: "hidden",
-                                        alignItems: "center"
+                                    }
+                                    : {
+                                        width: "90%",
+                                        display: "flex",
+                                        overflow: "hidden",
+                                        alignItems: "center",
                                     }
                             }
                         >
@@ -449,13 +537,7 @@ const JobCardFront = ({
                                     if (item !== undefined) {
                                         return (
                                             <SmallButton
-                                                color={
-                                                    item?.trait?.name
-                                                        ? "grayButton200"
-                                                        : index === 1
-                                                            ? "brownButton"
-                                                            : "purpleButton"
-                                                }
+                                                color="yellowButton100"
                                                 height={25}
                                                 value={item?.tool?.name}
                                                 label={item?.tool?.name.split(" ")[0]}
@@ -472,7 +554,6 @@ const JobCardFront = ({
                                     borderRadius: "8px",
                                     width: "27px",
                                     height: "27px",
-                                    mr: 1,
                                 }}
                                 color="redButton100"
                                 aria-label="search job"
@@ -485,15 +566,16 @@ const JobCardFront = ({
                     </Grid>
                     {/* Tools Section */}
                     {/* Trait Section */}
+
                     <Grid
                         container
                         spacing={2}
                         padding="0 8px 8px 0px"
                         minHeight={45}
-                        mt={3}
+                        // mt={3}
                         sx={
                             arrSlider2.length >= 4
-                                ? { justifyContent: "space-evenly", alignItems: "center" }
+                                ? { justifyContent: "space-between", alignItems: "center" }
                                 : { ml: 2 }
                         }
                     >
@@ -504,7 +586,6 @@ const JobCardFront = ({
                                     borderRadius: "8px",
                                     width: "27px",
                                     height: "27px",
-                                    ml: 1,
                                 }}
                                 color="redButton100"
                                 aria-label="search job"
@@ -516,10 +597,11 @@ const JobCardFront = ({
                         ) : null}
                         <Box
                             sx={
-                                job?.job_traits.length <= 1 
+                                job?.job_traits.length >= 4
                                     ? {
-                                        width: "65%",
-                                        display: "flex"
+                                        width: "75%",
+                                        display: "flex",
+                                        overflow: "hidden"
                                     }
                                     : {
                                         width: "65%",
@@ -551,7 +633,6 @@ const JobCardFront = ({
                                     borderRadius: "8px",
                                     width: "27px",
                                     height: "27px",
-                                    mr: 1,
                                 }}
                                 color="redButton100"
                                 aria-label="search job"
@@ -608,33 +689,32 @@ const JobCardFront = ({
                     />
                 </Box>
                 {/* <Box sx={{ margin: "0 -22px 0 -22px" }}> */}
-                <Box
+                {job?.primary?.name && <Box
                     component="img"
                     height={90}
                     // sx={{ margin: "0 -22px 0 -22px" }}
                     alt="job_exp"
                     src={
-                        (job?.primary?.name == "collaborator" &&
-                            profile_collaborator) ||
+                        (job?.primary?.name == "collaborator" && profile_collaborator) ||
                         (job?.primary?.name == "challenger" && profile_challenger) ||
                         (job?.primary?.name == "character" && profile_character) ||
                         (job?.primary?.name == "contemplator" && profile_contemplator)
                     }
-                />
+                />}
                 {/* </Box> */}
-                <Box
-                    component="img"
-                    height={90}
-                    // sx={{ margin: "0 -22px 0 -22px" }}
-                    alt="job_exp"
-                    src={
-                        (job?.shadow?.name == "collaborator" &&
-                            profile_collaborator) ||
-                        (job?.shadow?.name == "challenger" && profile_challenger) ||
-                        (job?.shadow?.name == "character" && profile_character) ||
-                        (job?.shadow?.name == "contemplator" && profile_contemplator)
-                    }
-                />
+                {job?.primary?.name &&
+                    <Box
+                        component="img"
+                        height={90}
+                        // sx={{ margin: "0 -22px 0 -22px" }}
+                        alt="job_exp"
+                        src={
+                            (job?.shadow?.name == "collaborator" && profile_collaborator) ||
+                            (job?.shadow?.name == "challenger" && profile_challenger) ||
+                            (job?.shadow?.name == "character" && profile_character) ||
+                            (job?.shadow?.name == "contemplator" && profile_contemplator)
+                        }
+                    />}
             </ Grid>
             {/* Radial Chart Section */}
             {/* Footer Section */}
